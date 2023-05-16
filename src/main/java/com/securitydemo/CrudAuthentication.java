@@ -1,0 +1,13 @@
+package com.securitydemo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CrudAuthentication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CrudAuthentication.class, args);
+	}
+
+}

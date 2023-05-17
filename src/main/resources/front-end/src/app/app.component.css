@@ -1,0 +1,16 @@
+mat-toolbar{
+    height: 80px;
+}
+
+button{
+    margin-left: 25px;
+}
+button.is-active{
+    background-color: rgb(93, 45, 138);
+}
+.spacer{
+    flex: 1;
+}
+.home-button{
+    background-color: rgb(87, 151, 211);
+}

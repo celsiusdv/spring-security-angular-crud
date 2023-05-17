@@ -14,13 +14,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
 public class AuthenticationService {
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -33,19 +36,16 @@ public class AuthenticationService {
     private TokenGenerator tokenService;
 
 
-    public UserEntity registerUser(String username, String password){
+
+    public UserEntity registerUser(String username, String password) {
         Role userRole = roleRepository.findByRoleName("USER").get();//retrieve roles from DB
         Optional<UserEntity> user = userRepository.findByUsername(username);//retrieve user from DB
-
-        if (user.isPresent()){
-            throw new RuntimeException("User:"+username + " already exists");
-        }else {
+        if (user.isPresent()) return null;
+        else {
             Set<Role> authorities = new HashSet<>();
             authorities.add(userRole);
-            return userRepository.save(new UserEntity(
-                    username,
-                    passwordEncoder.encode(password),
-                    authorities));
+            UserEntity userEntity = new UserEntity(username, passwordEncoder.encode(password), authorities);
+            return userRepository.save(userEntity);
         }
     }
     //3- authenticate the user

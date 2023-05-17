@@ -1,0 +1,22 @@
+<mat-toolbar color="accent">
+
+    <span>My Application</span>
+    
+    <button mat-fab color="warn" class="home-button" routerLink="/">
+        <mat-icon>home</mat-icon>
+    </button>
+  
+    <span class="spacer"></span>
+
+    <button mat-raised-button  color="primary" routerLink="/login" routerLinkActive="is-active">
+        <mat-icon>login</mat-icon>
+         log in
+    </button>
+    <button mat-raised-button  color="primary" routerLink="/signup" routerLinkActive="is-active">
+        <mat-icon>how_to_reg</mat-icon>
+         sign up
+    </button>
+
+</mat-toolbar>
+
+<router-outlet></router-outlet>

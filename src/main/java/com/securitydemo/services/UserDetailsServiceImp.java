@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-
+@Slf4j
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
     @Autowired
@@ -19,7 +19,10 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user=userRepository.findByUsername(username)
-                .orElseThrow(()->new UsernameNotFoundException("invalid user"));
+                .orElseThrow(()->{
+                    log.error("inside loadUserByUsername(), USER NOT FOUND");
+                    throw new UsernameNotFoundException("invalid user");
+                });
         return user;//return a user that implements the interface UserDetails
     }
 }

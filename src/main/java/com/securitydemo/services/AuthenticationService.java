@@ -56,13 +56,11 @@ public class AuthenticationService {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if(auth.isAuthenticated()){
                 String token = tokenService.generateJwt(auth);
-                user=userRepository.findByUsername(username).get();
+                user= (UserEntity) auth.getPrincipal();//get the user from the authentication manager after authentication
                 user.setToken(token);//this entity will have a token but will not persist the token in the database
             }
-        }catch (AuthenticationException e) {
-            e.getMessage();
-            return null;
-        }
-        return user;
+            return user;
+        }catch (AuthenticationException e) { return null; }
+
     }
 }

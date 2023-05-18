@@ -36,7 +36,7 @@ public class AuthenticationController {
             System.out.println(userEntity + " logged in successfully");
             return new ResponseEntity<>(userEntity,HttpStatus.OK);
         }else{
-            System.out.println(user + " user not found");
+            System.out.println(user.getUsername() + " user not found");
             return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
         }
     }

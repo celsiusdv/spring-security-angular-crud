@@ -33,7 +33,7 @@ public class AuthenticationController {
     public ResponseEntity<UserEntity> loginUser(@RequestBody UserEntity user){
         UserEntity userEntity=authenticationService.login(user.getUsername(), user.getPassword());
         if(userEntity != null){//7- finally retrieving the user with a token after the authentication
-            System.out.println(userEntity + " logged in successfully");
+            System.out.println(userEntity + ", logged in successfully");
             return new ResponseEntity<>(userEntity,HttpStatus.OK);
         }else{
             System.out.println(user.getUsername() + " user not found");

@@ -57,6 +57,6 @@ public class UserEntity implements UserDetails {
     public String getToken(){return this.token;}
 
     public String toString(){
-        return "[username]: "+username+" [roles]: "+authorities;
+        return "[username]: "+username+", roles: "+authorities;
     }
 }

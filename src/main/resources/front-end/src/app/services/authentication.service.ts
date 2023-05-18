@@ -1,53 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, of, take, tap } from 'rxjs';
 import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  apiUrl:string="http://localhost:8080/api/auth";
-  private isLogged:boolean=false;
-  private userSubject: BehaviorSubject<User | null>;
-  public user: Observable<User | null>;
-  
-  constructor(private router: Router,private http: HttpClient) {
-    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
-    this.user = this.userSubject.asObservable();
-  }
-  
-  public get userValue() {return this.userSubject.value;}
-  
-  public isLoggedIn():Observable<boolean> {//effects of this methods are applied in auth.guard.ts
-    //return of(this.isLoggedin);
-    return of(this.isLogged).pipe(tap((v) => console.log(v)));
-  }
 
-/*   public login(user: User):Observable<Object> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { user })
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        if(user != null){
-          console.log(this.userValue);
-          this.isLogged=true;
-          this.isLoggedIn().subscribe();
-        }
-        return user;
-      }));
-  } */
-  public login(user: User): Observable<Object> {
-    return this.http.post(`${this.apiUrl}/login`, user);
-  }
+	private apiUrl: string = "http://localhost:8080/api/auth";
+	private isLogged: boolean = false;
+	private user!: User;
 
-  public logout():void {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
-    this.userSubject.next(null);
-    this.router.navigate(['/login']);
-  }
+	constructor(private router: Router, private http: HttpClient) {
+	}
+
+	public isLoggedIn(): Observable<boolean> {//method utilized for guards, and authorizations
+		return of(this.isLogged).pipe(tap((booleanValue) => console.log(booleanValue)));
+	}
+
+	public login(body: User): Observable<any> {//send the body to the server
+		return this.http.post<any>(`${this.apiUrl}/login`, body)
+			.pipe(map(value => {//return the body from the server
+				this.user = value;
+				console.log(this.user);
+				if (this.user.token != null) {
+// store user details and jwt token in local storage to keep user logged in between page refreshes
+					localStorage.setItem('user', JSON.stringify(this.user));
+					localStorage.setItem('token',`${this.user.token}`);
+					console.log(this.user.authorities[0].authority)
+					this.isLogged = true;
+				}
+		} ) );
+	}
+
+
+	public getToken():string | null {return localStorage.getItem('token');}
+
+	public logout(): void {
+		//remove user and token from local storage to log user out
+		localStorage.removeItem('user');
+		localStorage.removeItem('token');
+		this.router.navigate(['/login']);
+	}
 
 }

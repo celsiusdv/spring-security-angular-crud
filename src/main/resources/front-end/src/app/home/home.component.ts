@@ -10,5 +10,6 @@ export class HomeComponent {
   logged:boolean=false;
   constructor(private auth:AuthenticationService){
     this.auth.isLoggedIn().subscribe(value =>{this.logged=value;});
+    console.log("boolean value from HomeComponent: "+this.logged);
   }
 }

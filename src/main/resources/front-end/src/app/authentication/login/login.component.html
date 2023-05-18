@@ -3,14 +3,12 @@
     <form [formGroup]="formLogin" (ngSubmit)="send()">
 
         <label for="username">User Name</label>
-        <input type="text" formControlName="username"
-         #usernameInput (input)="user.username= usernameInput.value">
+        <input type="text" formControlName="username">
         
         <br>
 
         <label for="username">Password</label>
-        <input type="password" formControlName="password"
-         #passwordInput (input)="user.password= passwordInput.value">
+        <input type="password" formControlName="password">
 
         <button type="submit" >send </button>
     </form>

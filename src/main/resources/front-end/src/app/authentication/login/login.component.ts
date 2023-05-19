@@ -29,13 +29,10 @@ export class LoginComponent {
     this.user = this.formLogin.value;
     this.auth.login(this.user).subscribe({//validations and handlings of the logged-in user on AuthenticationService.ts, login method
       next: () => {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/login';// get return url from query parameters or default to home page
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';// get return url from query parameters or default to home page
         this.router.navigateByUrl(returnUrl);
       },
-      error: exception => {
-        this.auth.logout();//just temporary to test log-in wrong inputs
-        console.log(exception);
-      }
+      error: exception => { console.log(exception); }
     });
   }
 }

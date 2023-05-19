@@ -7,15 +7,23 @@
     </button>
   
     <span class="spacer"></span>
+    <div *ngIf="!(loginStatus | async) as loginStatus; else logoutIfUserIsLogged">
+        <button mat-raised-button  color="primary" routerLink="/login" routerLinkActive="is-active">
+            <mat-icon>login</mat-icon>
+             log in
+        </button>
+        <button mat-raised-button  color="primary" routerLink="/signup" routerLinkActive="is-active">
+            <mat-icon>how_to_reg</mat-icon>
+             sign up
+        </button>
+    </div>
 
-    <button mat-raised-button  color="primary" routerLink="/login" routerLinkActive="is-active">
-        <mat-icon>login</mat-icon>
-         log in
-    </button>
-    <button mat-raised-button  color="primary" routerLink="/signup" routerLinkActive="is-active">
-        <mat-icon>how_to_reg</mat-icon>
-         sign up
-    </button>
+    <ng-template #logoutIfUserIsLogged>
+        <button mat-raised-button  color="primary" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+             log out
+        </button>
+    </ng-template>
 
 </mat-toolbar>
 

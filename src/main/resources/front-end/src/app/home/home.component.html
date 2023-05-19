@@ -2,6 +2,6 @@
 <h2>component 1 for authenticated and not authenticated users</h2>
 <h2>component 2 for authenticated and not authenticated users</h2>
 
-<div *ngIf="(loginStatus | async) as loginStatus">
+<div *ngIf="loginStatus | async as loginStatus">
     <app-onlyforauthenticated> </app-onlyforauthenticated>
 </div>

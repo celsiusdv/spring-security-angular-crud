@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, map, of, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -10,38 +10,45 @@ import { User } from '../_models/user';
 export class AuthenticationService {
 
 	private apiUrl: string = "http://localhost:8080/api/auth";
-	private isLogged: boolean = false;
+	private loginSubject!: BehaviorSubject<boolean>;
 	private user!: User;
 
 	constructor(private router: Router, private http: HttpClient) {
-	}
-
-	public isLoggedIn(): Observable<boolean> {//method utilized for guards, and authorizations
-		return of(this.isLogged).pipe(tap((booleanValue) => console.log(booleanValue)));
+		this.keepSession();
 	}
 
 	public login(body: User): Observable<any> {//send the body to the server
 		return this.http.post<any>(`${this.apiUrl}/login`, body)
-			.pipe(map(value => {//return the body from the server
+			.pipe(map(value => {//return the user from the server
 				this.user = value;
 				console.log(this.user);
+				// store token in local storage to keep user logged in between page refreshes
 				if (this.user.token != null) {
-// store user details and jwt token in local storage to keep user logged in between page refreshes
-					localStorage.setItem('user', JSON.stringify(this.user));
-					localStorage.setItem('token',`${this.user.token}`);
-					console.log(this.user.authorities[0].authority)
-					this.isLogged = true;
+					localStorage.setItem('token', `${this.user.token}`);
+				//progapate boolean value to all elements in the specified html tags
+					this.loginSubject.next(true);
+					console.log("inside login method from authentication service: logged user?=")
+					console.log(this.isLoggedIn);
 				}
-		} ) );
+			}));
+	}
+// methods to allow components to be shown according to the login status
+	public get loginStatus():BehaviorSubject<boolean>{return this.loginSubject;}
+	public get isLoggedIn():boolean{return this.loginSubject.value;}
+	public get getToken():string | null {return localStorage.getItem('token');}
+
+	//keep the session for each refresh page
+	private keepSession():void{
+		if(this.getToken !== null) this.loginSubject= new BehaviorSubject(true);
+		else this.loginSubject= new BehaviorSubject(false);
+		
 	}
 
-
-	public getToken():string | null {return localStorage.getItem('token');}
-
+	//remove user and token from local storage to log user out
 	public logout(): void {
-		//remove user and token from local storage to log user out
-		localStorage.removeItem('user');
 		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		this.loginSubject.next(false);
 		this.router.navigate(['/login']);
 	}
 

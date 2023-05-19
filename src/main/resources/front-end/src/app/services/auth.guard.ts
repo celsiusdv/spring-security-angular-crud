@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 
 export const authGuard = () => {
-  const service = inject(AuthenticationService);
+/*   const service = inject(AuthenticationService);
   const route= inject(Router);
     return service.isLoggedIn().pipe(
       map((isLogged) => {
@@ -15,7 +15,7 @@ export const authGuard = () => {
           return false;
         }
       })
-    );
+    ); */
 };
   
 

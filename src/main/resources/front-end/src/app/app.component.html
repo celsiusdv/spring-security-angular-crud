@@ -1,13 +1,22 @@
 <mat-toolbar color="accent">
 
-    <span>My Application</span>
-    
-    <button mat-fab color="warn" class="home-button" routerLink="/">
-        <mat-icon>home</mat-icon>
-    </button>
+    <div class="title">
+        <label>My Application</label>
+    </div>
+
+    <div class="auth-buttons">
+        <button mat-fab class="home-button" routerLink="/">
+            <mat-icon>home</mat-icon>
+        </button>
+        <button mat-raised-button  style="margin-top: 11px;" routerLink="/tools-management" routerLinkActive="is-active">
+            <mat-icon>handyman</mat-icon>
+            tools management
+        </button>
+    </div>
   
     <span class="spacer"></span>
-    <div *ngIf="!(loginStatus | async) as loginStatus; else logoutIfUserIsLogged">
+    
+    <div *ngIf="!(loginStatus | async) as loginStatus; else logoutIfUserIsLogged" class="auth-buttons">
         <button mat-raised-button  color="primary" routerLink="/login" routerLinkActive="is-active">
             <mat-icon>login</mat-icon>
              log in

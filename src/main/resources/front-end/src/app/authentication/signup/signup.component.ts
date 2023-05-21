@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from 'src/app/_models/user';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -7,8 +10,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+
   signupForm: FormGroup;
-  constructor() {
+  
+  constructor(private auth:AuthenticationService,private goBack: Router) {
 
     this.signupForm = new FormGroup({
       username: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -19,7 +24,12 @@ export class SignupComponent {
   public get formControls() { return this.signupForm.controls; }
 
   public send(): void {
-    console.log(this.formControls['username'].value);
-    console.log(this.signupForm.value + " testing input from signup.component.ts");
+    const user:User=this.signupForm.value;
+    this.auth.createUser(user).subscribe({
+        next: (data) => {
+            console.log(data);
+            this.goBack.navigate(['/']);
+        }
+    });
   }
 }

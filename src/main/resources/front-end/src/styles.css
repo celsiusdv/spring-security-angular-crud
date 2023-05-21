@@ -1,4 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Quicksand:wght@400;600&family=Roboto:wght@400;500;700&display=swap');
+* {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: medium;
+}
+html,
+body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+    font-family: Josefin, "Josefin Sans", sans-serif;
+    color: rgb(199, 194, 187);
+}

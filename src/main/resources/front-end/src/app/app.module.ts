@@ -17,8 +17,9 @@ import { MatTableModule } from '@angular/material/table';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { OnlyforauthenticatedComponent } from './onlyforauthenticated/onlyforauthenticated.component';
 import { AuthenticationService } from './services/authentication.service';
+import { ToolListComponent } from './home/tool-list/tool-list.component';
+import { ToolListService } from './services/tool-list.service';
 
 
 
@@ -37,7 +38,7 @@ const MaterialModule= [
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    OnlyforauthenticatedComponent
+    ToolListComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +49,7 @@ const MaterialModule= [
     ReactiveFormsModule,
     NoopAnimationsModule
   ],
-  providers: [AuthenticationService],//services goes in this array
+  providers: [AuthenticationService,ToolListService],//services goes in this array
   bootstrap: [AppComponent]
 })
 export class AppModule { }

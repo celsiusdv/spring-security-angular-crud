@@ -1,7 +1,21 @@
 <h1>home section</h1>
-<h2>component 1 for authenticated and not authenticated users</h2>
-<h2>component 2 for authenticated and not authenticated users</h2>
+<div *ngIf="loginStatus | async as loginStatus"><!-- this element will be shown only for authenticated users -->
+    <form [formGroup]="toolsForm" (ngSubmit)="saveTool()">
 
-<div *ngIf="loginStatus | async as loginStatus">
-    <app-onlyforauthenticated> </app-onlyforauthenticated>
+        <label for="toolName">Tool Name</label>
+        <input type="text" formControlName="toolName">
+        
+        <br>
+
+        <label for="price">Price</label>
+        <input type="text" formControlName="price">
+
+        <button type="submit" >send </button>
+    </form>
 </div>
+<hr>
+
+<div>
+    <app-tool-list [toolList]="exportToolList"> </app-tool-list>
+</div>
+

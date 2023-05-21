@@ -4,13 +4,63 @@ mat-toolbar{
 
 button{
     margin-left: 25px;
+    
 }
+
 button.is-active{
     background-color: rgb(93, 45, 138);
+    color: rgb(199, 194, 187);
 }
-.spacer{
+.title{
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: rgb(45, 125, 74);
+    padding: 12px 10px 12px 10px;
+    border-radius: 7px;
+    box-shadow: 
+    0px 2px 4px rgba(0,0,0,0.15), 
+    0px 4px 8px rgba(0,0,0,0.15), 
+    0px 8px 16px rgba(0,0,0,0.15), 
+    0px 16px 32px rgba(0,0,0,0.15);/**/
+    color: rgb(199, 194, 187);
+    
+}
+.title:hover {
+    box-shadow:
+        -10px -0px 15px rgba(36, 34, 34, 0.129),
+        10px 0px 15px rgba(0, 0, 0, 0.15),
+        inset -10px -10px 15px rgba(36, 34, 34, 0.129),
+        inset 10px 10px 15px rgba(0, 0, 0, 0.15);
+    color: rgb(18, 233, 197);
+}
+
+.title:active {
+    opacity: 0.7;
+}
+
+.spacer {
     flex: 1;
 }
-.home-button{
-    background-color: rgb(87, 151, 211);
+
+.home-button {
+    background-color: rgba(23, 179, 109, 0.858);
+    color: rgb(187, 247, 251);
+}
+.auth-buttons{
+    display: flex;
+}
+/* selector to make elements responsive in a specified width */
+@media (max-width:600px){
+    .auth-buttons{
+        display: grid;
+        grid-template-columns: auto;
+        grid-column: 1;
+        
+    }
+    .auth-buttons button{
+        margin-top: 10px;
+    }
+    mat-toolbar{
+        height: 120px;
+    }
 }

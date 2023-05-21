@@ -32,6 +32,9 @@ export class AuthenticationService {
 				}
 			}));
 	}
+	public createUser(user: User): Observable<Object> {
+		return this.http.post(`${this.apiUrl}/register`, user);
+	}
 // methods to allow components to be shown according to the login status
 	public get loginStatus():BehaviorSubject<boolean>{return this.loginSubject;}
 	public get isLoggedIn():boolean{return this.loginSubject.value;}
@@ -49,7 +52,7 @@ export class AuthenticationService {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
 		this.loginSubject.next(false);
-		this.router.navigate(['/login']);
+		this.router.navigate(['/']);
 	}
 
 }

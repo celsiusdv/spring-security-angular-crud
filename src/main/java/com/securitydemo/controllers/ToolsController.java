@@ -5,15 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/tool")
+public class ToolsController {
 
-    @GetMapping("/user")
+    @GetMapping("/tools")
     public String showLevel(){
         return "User Access Level";
     }
-    @GetMapping("/all")
-    public String showLevelForAll(){
-        return "User or Admin Access Level";
-    }
+
 }

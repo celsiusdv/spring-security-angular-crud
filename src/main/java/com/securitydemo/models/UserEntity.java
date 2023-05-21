@@ -20,14 +20,14 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String username;
     private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+                                        //configuring CascadeType to delete row from table users_and_roles first, to avoid conflict with "users" table
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "users_and_roles",
             joinColumns = @JoinColumn(name = "user_id_junction",referencedColumnName = "user_id"),//reference to the userid on this table
             inverseJoinColumns = @JoinColumn(name = "role_id_junction",referencedColumnName = "role_id") )
     private Set<Role> authorities;
 
-    @Transient
+    @Transient//annotation to avoid variable declaration being mapped to a table
     private String token;//this declared variable will not be mapped to a column
 
     public UserEntity(){ this.authorities=new HashSet<>();}

@@ -58,9 +58,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.authorizeRequests(auth -> {
             auth.antMatchers("/api/auth/**").permitAll();
-            auth.antMatchers("/api/user/all").hasAnyRole("ADMIN","USER");
+            auth.antMatchers("/api/tool/**").hasAnyRole("ADMIN","USER");
             auth.antMatchers("/api/admin/**").hasRole("ADMIN");
-            auth.antMatchers("/api/user/**").hasRole("USER");
             auth.anyRequest().authenticated();
         });
         http.oauth2ResourceServer(oAuth2 -> {

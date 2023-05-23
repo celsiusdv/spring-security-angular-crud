@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /*this service can be used by any user with ADMIN or USER role*/
@@ -19,19 +18,23 @@ public class ToolService {
     private ToolRepository toolRepository;
 
     public boolean isToolSaved(Tool tool){
-//TODO CATCH IF BODY EXISTS BUT IS COMPLETELY EMPTY: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.securitydemo.models.Tool.getToolName()" is null
-        if( !tool.getToolName().equals("") && tool.getPrice() > 0){
-            log.info("saved tool: "+tool);
-            toolRepository.save(tool);
-            return true;
-        }else if (!tool.getToolName().equals("") && tool.getPrice() <= 0){
-            log.warn("empty price");
-            return false;
-        }else if(tool.getToolName().equals("") && tool.getPrice() > 0){
-            log.warn("empty tool name");
-            return false;
-        }else{
-            log.warn("empty description");
+        try{
+            if( !tool.getToolName().equals("") && tool.getPrice() > 0){
+                log.info("saved tool: "+tool);
+                toolRepository.save(tool);
+                return true;
+            }else if (!tool.getToolName().equals("") && tool.getPrice() <= 0){
+                log.warn("empty price");
+                return false;
+            }else if(tool.getToolName().equals("") && tool.getPrice() > 0){
+                log.warn("empty tool name");
+                return false;
+            }else{
+                log.warn("empty description");
+                return false;
+            }
+        }catch (NullPointerException e){
+            log.error("JSON body is empty, missing 'key':value pair");
             return false;
         }
     }
@@ -41,18 +44,16 @@ public class ToolService {
     }
 
     public Tool getTool(Integer toolId){
-//TODO CATCH IF ELEMENT DOESN'T EXIST java.util.NoSuchElementException: No value present
         Optional<Tool> tool=toolRepository.findById(toolId);
         if(tool.isPresent()){
-            log.info("tool found!!: "+tool.get());
+            log.info("tool found: "+tool.get());
             return tool.get();
         }
-        log.warn("tool not found!!: ");
+        log.warn("tool not found");
         return null;
     }
 
     public boolean isToolUpdated(Integer toolId,Tool tool){
-//TODO CATCH IF ELEMENT DOESN'T EXIST java.util.NoSuchElementException: No value present
         Optional<Tool>toolReference=toolRepository.findById(toolId);
         if(toolReference.isPresent()){
             Tool toolToUpdate=toolReference.get();
@@ -64,8 +65,10 @@ public class ToolService {
             log.info("updated tool: "+toolToUpdate);
             toolRepository.save(toolToUpdate);
             return true;
+        }else {
+            log.warn("tool with id:"+toolId+ " not found found for updates");
+            return false;
         }
-        return false;
     }
 
     public boolean isDeleted(Integer toolId){

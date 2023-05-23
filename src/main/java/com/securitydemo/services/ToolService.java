@@ -69,17 +69,14 @@ public class ToolService {
     }
 
     public boolean isDeleted(Integer toolId){
-        if( toolId > 0){
-            try{
-                Optional<Tool> tool=toolRepository.findById(toolId);
-                if(tool.isPresent()) toolRepository.deleteToolById(toolId);
-            }catch (NoSuchElementException e) {
-                log.error("tool not found, therefore can't be deleted");
-                return false;
-            }
+        Optional<Tool> tool=toolRepository.findById(toolId);
+        if(tool.isPresent()){
+            toolRepository.deleteToolById(toolId);
+            log.warn("tool deleted from repository: "+tool.get());
             return true;
-        }else return false;
-
+        }else{
+            log.error("no tool found for deletion: "+null);
+            return false;
+        }
     }
-
 }

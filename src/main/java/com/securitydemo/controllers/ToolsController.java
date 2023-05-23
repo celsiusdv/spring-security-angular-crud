@@ -55,4 +55,10 @@ public class ToolsController {
                 new Tool("no tool found for update",0.0),HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/tool/{id}")
+    public ResponseEntity<String> deleteTool(@PathVariable("id") Integer id){
+        if(this.toolService.isDeleted(id)==true){
+            return new ResponseEntity<>("tool deleted successfully!!",HttpStatus.OK);
+        }else return  new ResponseEntity<>("no tool found for deletion",HttpStatus.NOT_FOUND);
+    }
 }

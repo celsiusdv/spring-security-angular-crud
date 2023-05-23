@@ -12,8 +12,17 @@ import java.util.Optional;
 
 /**
  * For better performance on a User deletion that contains @ManyToMany relationship with another table,
- * we will call a stored procedure from the specified database, if there is no need to use
- * stored procedures for deletion, use this annotation value instead:
+ * we will create a stored procedure for the current database, in this case for mariadb:
+ * -----------------------
+ * DELIMITER //
+ * CREATE PROCEDURE `delete_user_by_id`(IN id int(11))
+ * BEGIN
+ * DELETE FROM users_and_roles WHERE user_id_junction=id;
+ * DELETE FROM users WHERE user_id=id;
+ * END //
+ * DELIMITER ;
+ * -----------------------
+ * if there is no need to use stored procedures for deletion, use this annotation value instead:
  * cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH} inside the @ManyToMany parameter.
  */
 @Repository
@@ -24,5 +33,4 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer> {
     @Modifying
     @Query(nativeQuery = true, value = "call delete_user_by_id(:user_id)")
     void deleteUserById(@Param("user_id") Integer userId);
-
 }

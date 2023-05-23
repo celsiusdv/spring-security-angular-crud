@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/*service to delete registered users*/
 @Service
 public class AdminService {
 

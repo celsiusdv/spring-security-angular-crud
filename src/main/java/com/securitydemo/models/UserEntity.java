@@ -13,8 +13,7 @@ import java.util.Set;
 @Entity( name= "User")
 public class UserEntity implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer userId;
     @Column(unique = true)

@@ -51,15 +51,21 @@ public class ToolService {
         return null;
     }
 
-    public Tool updateTool(Integer toolId,Tool tool){
+    public boolean isToolUpdated(Integer toolId,Tool tool){
+//TODO CATCH IF ELEMENT DOESN'T EXIST java.util.NoSuchElementException: No value present
         Optional<Tool>toolReference=toolRepository.findById(toolId);
         if(toolReference.isPresent()){
             Tool toolToUpdate=toolReference.get();
+            log.warn("tool to update: "+toolToUpdate);
+
             toolToUpdate.setToolName(tool.getToolName());
             toolToUpdate.setPrice(tool.getPrice());
-            return toolRepository.save(toolToUpdate);
+
+            log.info("updated tool: "+toolToUpdate);
+            toolRepository.save(toolToUpdate);
+            return true;
         }
-        return null;
+        return false;
     }
 
     public boolean isDeleted(Integer toolId){

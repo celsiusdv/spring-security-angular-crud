@@ -29,7 +29,6 @@ public class ToolsController {
         }
     }
 
-
     @GetMapping("/tools")
     public ResponseEntity<List<Tool>> getTools(){
         List<Tool> tools=toolService.getAllTools();
@@ -38,7 +37,6 @@ public class ToolsController {
         }else return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-
     @GetMapping("/tools/{id}")
     public ResponseEntity<Tool>getToolById(@PathVariable("id") Integer id){
         Tool tool=toolService.getTool(id);
@@ -46,6 +44,15 @@ public class ToolsController {
             return new ResponseEntity<>(tool,HttpStatus.OK);
         } else return new ResponseEntity<>(
                 new Tool("tool not found", 0.0),HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/tool/{id}")
+    public ResponseEntity<Tool>updateTool(@PathVariable("id") Integer id,
+                                          @RequestBody Tool updatedTool){
+        if(toolService.isToolUpdated(id,updatedTool) == true){
+            return new ResponseEntity<>(updatedTool,HttpStatus.OK);
+        }else return new ResponseEntity<>(
+                new Tool("no tool found for update",0.0),HttpStatus.NOT_FOUND);
     }
 
 }

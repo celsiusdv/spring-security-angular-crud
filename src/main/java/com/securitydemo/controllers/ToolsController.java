@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tool-management")
 public class ToolsController {
@@ -26,4 +28,24 @@ public class ToolsController {
             return new ResponseEntity<>(tool,HttpStatus.ACCEPTED);
         }
     }
+
+
+    @GetMapping("/tools")
+    public ResponseEntity<List<Tool>> getTools(){
+        List<Tool> tools=toolService.getAllTools();
+        if(tools.size() > 0){
+            return new ResponseEntity<>(tools,HttpStatus.OK);
+        }else return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/tools/{id}")
+    public ResponseEntity<Tool>getToolById(@PathVariable("id") Integer id){
+        Tool tool=toolService.getTool(id);
+        if(tool != null){
+            return new ResponseEntity<>(tool,HttpStatus.OK);
+        } else return new ResponseEntity<>(
+                new Tool("tool not found", 0.0),HttpStatus.NOT_FOUND);
+    }
+
 }

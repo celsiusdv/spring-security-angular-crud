@@ -21,28 +21,33 @@ public class ToolService {
     public boolean isToolSaved(Tool tool){
 //TODO CATCH IF BODY EXISTS BUT IS COMPLETELY EMPTY: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.securitydemo.models.Tool.getToolName()" is null
         if( !tool.getToolName().equals("") && tool.getPrice() > 0){
-            log.warn("saved tool: "+tool);
+            log.info("saved tool: "+tool);
             toolRepository.save(tool);
             return true;
         }else if (!tool.getToolName().equals("") && tool.getPrice() <= 0){
-            log.error("empty price");
+            log.warn("empty price");
             return false;
         }else if(tool.getToolName().equals("") && tool.getPrice() > 0){
-            log.error("empty tool name");
+            log.warn("empty tool name");
             return false;
         }else{
-            log.error("empty description");
+            log.warn("empty description");
             return false;
         }
     }
 
-    public List<Tool> getAllTools(){return toolRepository.findAll();}
+    public List<Tool> getAllTools(){
+        return toolRepository.findAll();
+    }
 
     public Tool getTool(Integer toolId){
+//TODO CATCH IF ELEMENT DOESN'T EXIST java.util.NoSuchElementException: No value present
         Optional<Tool> tool=toolRepository.findById(toolId);
         if(tool.isPresent()){
+            log.info("tool found!!: "+tool.get());
             return tool.get();
         }
+        log.warn("tool not found!!: ");
         return null;
     }
 
@@ -57,17 +62,18 @@ public class ToolService {
         return null;
     }
 
-    public boolean deleteTool(Integer toolId){
-        try{
-            Optional<Tool> tool=toolRepository.findById(toolId);
-            if(tool.isPresent()){
-                toolRepository.deleteToolById(toolId);
+    public boolean isDeleted(Integer toolId){
+        if( toolId > 0){
+            try{
+                Optional<Tool> tool=toolRepository.findById(toolId);
+                if(tool.isPresent()) toolRepository.deleteToolById(toolId);
+            }catch (NoSuchElementException e) {
+                log.error("tool not found, therefore can't be deleted");
+                return false;
             }
-        }catch (NoSuchElementException e) {
-            log.error("tool not found, therefore can't be deleted");
-            return false;
-        }
-        return true;
+            return true;
+        }else return false;
+
     }
 
 }

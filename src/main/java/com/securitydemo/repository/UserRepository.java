@@ -12,7 +12,7 @@ import java.util.Optional;
 
 /**
  * For better performance on a User deletion that contains @ManyToMany relationship with another table,
- * we will create a stored procedure for the current database, in this case for mariadb:
+ * create a stored procedure for the current database, in this case for mariadb:
  * -----------------------
  * DELIMITER //
  * CREATE PROCEDURE `delete_user_by_id`(IN id int(11))
@@ -23,7 +23,8 @@ import java.util.Optional;
  * DELIMITER ;
  * -----------------------
  * if there is no need to use stored procedures for deletion, use this annotation value instead:
- * cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH} inside the @ManyToMany parameter.
+ * cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH} inside the @ManyToMany parameter
+ * in the authorities field from UserEntity.class.
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Integer> {

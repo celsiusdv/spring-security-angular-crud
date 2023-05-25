@@ -24,7 +24,7 @@ public class ToolsController {
         }else return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-    @GetMapping("/tools/{id}")
+    @GetMapping("/tool/{id}")
     public ResponseEntity<Tool>getToolById(@PathVariable("id") Integer id){
         Tool tool=toolService.getTool(id);
         if(tool != null){

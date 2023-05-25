@@ -40,6 +40,7 @@ public class ToolService {
     }
 
     public List<Tool> getAllTools(){
+        log.info("getting all tools");
         return toolRepository.findAll();
     }
 

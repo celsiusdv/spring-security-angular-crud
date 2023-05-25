@@ -16,20 +16,6 @@ public class ToolsController {
     @Autowired
     private ToolService toolService;
 
-    public String showLevel(){
-        return "User Access Level";
-    }
-
-    @PostMapping("/tool")
-    public ResponseEntity<Tool> createTool(@RequestBody Tool tool){
-        if(toolService.isToolSaved(tool) == true){
-            return new ResponseEntity<>(tool, HttpStatus.OK);
-        }else {
-            tool.setToolName("nothing to save, wrong description");
-            return new ResponseEntity<>(tool,HttpStatus.ACCEPTED);
-        }
-    }
-
     @GetMapping("/tools")
     public ResponseEntity<List<Tool>> getTools(){
         List<Tool> tools=toolService.getAllTools();
@@ -46,6 +32,17 @@ public class ToolsController {
         } else return new ResponseEntity<>(
                 new Tool("tool not found", 0.0),HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping("/tool")
+    public ResponseEntity<Tool> createTool(@RequestBody Tool tool){
+        if(toolService.isToolSaved(tool) == true){
+            return new ResponseEntity<>(tool, HttpStatus.OK);
+        }else {
+            tool.setToolName("nothing to save, wrong description");
+            return new ResponseEntity<>(tool,HttpStatus.ACCEPTED);
+        }
+    }
+
 
     @PutMapping("/tool/{id}")
     public ResponseEntity<Tool>updateTool(@PathVariable("id") Integer id,

@@ -55,6 +55,7 @@ public class SecurityConfig {
 
     @Bean //2- filter the request to get the role and validations
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.cors();
         http.csrf(csrf -> csrf.disable());
         http.authorizeRequests(auth -> {
             auth.antMatchers("/api/auth/**").permitAll();

@@ -14,17 +14,13 @@ export class ToolService {
   
   /*TO DO: create crud methods
   POST: /tool {body}
-  GET: /tools 
-  GET: /tools/{id}
+  GET: /tools ✔️
+  GET: /tool/{id}
   PUT: /tool/{id} {body}
   DELETE: /tool/{id}
   */
-  public getToolList(): Observable<any> {
-
-    return this.http.get<any>(`${this.apiUrl}/tools`)
-    .pipe(map(value =>{
-      console.log("inside tool list method from service");
-      console.log(value);
-    }));
+  public getToolList(): Observable<Tool[]> {
+    return this.http.get<Tool[]>(`${this.apiUrl}/tools`);
   }
+
 }

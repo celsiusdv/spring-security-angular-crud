@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Tool } from '../_models/tool';
+import { ToolService } from '../services/tool.service';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +16,21 @@ export class HomeComponent {
   exportToolList:MatTableDataSource<any>;//variable to set in child component in tool-list.component.html for table values
   toolsForm:FormGroup;
   tool!:Tool;
-  constructor(private auth:AuthenticationService){
+  constructor(private auth:AuthenticationService, private toolService:ToolService){
     this.loginStatus=this.auth.loginStatus;//show ccomponents and child components according to login status in the home.component.html
     this.exportToolList=new MatTableDataSource()
     this.toolsForm=new FormGroup({
                                   toolName:new FormControl(null,null),
                                   price:new FormControl(null,null)
+    });
+    
+    this.toolService.getToolList().subscribe({
+      next: (toolList)=>{
+        console.log(toolList);
+      },
+      error:(exc)=>{
+        console.log(exc);
+      }
     });
   }
 
@@ -29,6 +39,7 @@ export class HomeComponent {
   }
   public saveTool():void{
     this.tool=this.toolsForm.value;
+    this.tool.user=this.auth.getUser;
     console.log(this.tool);
     //to do: import tool-list.service and create a tool to save in the database
   }

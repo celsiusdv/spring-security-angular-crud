@@ -19,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { ToolListComponent } from './home/tool-list/tool-list.component';
-import { ToolListService } from './services/tool-list.service';
+import { ToolService } from './services/tool.service';
+import { JwtInterceptorService } from './services/jwt.interceptor';
 
 
 
@@ -49,7 +50,7 @@ const MaterialModule= [
     ReactiveFormsModule,
     NoopAnimationsModule
   ],
-  providers: [AuthenticationService,ToolListService],//services goes in this array
+  providers: [AuthenticationService,ToolService, JwtInterceptorService],//services goes in this array
   bootstrap: [AppComponent]
 })
 export class AppModule { }

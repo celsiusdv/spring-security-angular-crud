@@ -32,6 +32,7 @@ export class AuthenticationService {
 				}
 			}));
 	}
+	public get getUser():User{ return this.user;}
 	public createUser(user: User): Observable<Object> {
 		return this.http.post(`${this.apiUrl}/register`, user);
 	}

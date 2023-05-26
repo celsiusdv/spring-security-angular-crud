@@ -12,11 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,13 +27,13 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Autowired
     private KeyProperties keys;
     @Autowired
@@ -46,13 +44,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // bean used in the UserDetailsServiceImp.class, this bean calls the UserDetailsService
-    public AuthenticationManager authenticationManager(){
-        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
-        daoProvider.setUserDetailsService(this.userDetailsService);//4- calls the method loadUserByUsername()
-        daoProvider.setPasswordEncoder(this.passwordEncoder());
-        return new ProviderManager(daoProvider);
-    }
 
     @Bean //2- filter the request to get the role and validations
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -67,6 +58,7 @@ public class SecurityConfig {
         });
         http.oauth2ResourceServer(oAuth2 -> {
             oAuth2.jwt().jwtAuthenticationConverter(this.jwtAuthenticationConverter());
+            oAuth2.authenticationEntryPoint(this.entryPointException());
         });
         http.sessionManagement(session -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -74,6 +66,15 @@ public class SecurityConfig {
         //http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
+    @Bean // bean used in the UserDetailsServiceImp.class, this bean calls the UserDetailsService
+    public AuthenticationManager authenticationManager(){
+        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+        daoProvider.setUserDetailsService(this.userDetailsService);//4- calls the method loadUserByUsername()
+        daoProvider.setPasswordEncoder(this.passwordEncoder());
+        return new ProviderManager(daoProvider);
+    }
+    @Bean
+    public AuthenticationEntryPoint entryPointException(){return new AuthorizationException();}
 
     @Bean//decipher the keys and get the claims
     public JwtDecoder jwtDecoder(){

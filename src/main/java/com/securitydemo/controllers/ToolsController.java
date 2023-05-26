@@ -43,7 +43,6 @@ public class ToolsController {
         }
     }
 
-
     @PutMapping("/tool/{id}")
     public ResponseEntity<Tool>updateTool(@PathVariable("id") Integer id,
                                           @RequestBody Tool updatedTool){

@@ -21,6 +21,8 @@ import { AuthenticationService } from './services/authentication.service';
 import { ToolListComponent } from './home/tool-list/tool-list.component';
 import { ToolService } from './services/tool.service';
 import { JwtInterceptorService } from './services/jwt.interceptor';
+import { ToolsManagementComponent } from './tools-management/tools-management.component';
+import { UpdateDeleteComponent } from './tools-management/update-delete/update-delete.component';
 
 
 
@@ -39,7 +41,9 @@ const MaterialModule= [
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    ToolListComponent
+    ToolListComponent,
+    ToolsManagementComponent,
+    UpdateDeleteComponent
   ],
   imports: [
     BrowserModule,

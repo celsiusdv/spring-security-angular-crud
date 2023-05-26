@@ -24,7 +24,12 @@
       <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> Price </th>
       <td mat-cell *matCellDef="let element"> {{element.price}} </td>
     </ng-container>
+
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> Added By </th>
+      <td mat-cell *matCellDef="let element"> {{element.user.username}}{{element.user.userId}} </td>
+    </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="['position','id','name','price'];"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['position','id','name','price'];"></tr>
+    <tr mat-header-row *matHeaderRowDef="['position','id','name','price','user'];"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['position','id','name','price','user'];"></tr>
   </table>

@@ -12,35 +12,38 @@ import { ToolService } from '../services/tool.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  loginStatus!:BehaviorSubject<boolean>;
-  exportToolList:MatTableDataSource<any>;//variable to set in child component in tool-list.component.html for table values
-  toolsForm:FormGroup;
-  tool!:Tool;
-  constructor(private auth:AuthenticationService, private toolService:ToolService){
-    this.loginStatus=this.auth.loginStatus;//show ccomponents and child components according to login status in the home.component.html
-    this.exportToolList=new MatTableDataSource()
-    this.toolsForm=new FormGroup({
-                                  toolName:new FormControl(null,null),
-                                  price:new FormControl(null,null)
-    });
-    
-    this.toolService.getToolList().subscribe({
-      next: (toolList)=>{
-        console.log(toolList);
-      },
-      error:(exc)=>{
-        console.log(exc);
-      }
-    });
-  }
+   loginStatus!: BehaviorSubject<boolean>;
+   exportToolList: MatTableDataSource<any>;//variable to set in child component in tool-list.component.html for table values
+   toolsForm: FormGroup;
+   tool!: Tool;
+   constructor(private auth: AuthenticationService, private toolService: ToolService) {
+      this.loginStatus = this.auth.loginStatus;//show ccomponents and child components according to login status in the home.component.html
+      this.exportToolList = new MatTableDataSource();//initialize the table to export data in the child template
+      this.toolsForm = new FormGroup({
+         toolName: new FormControl(null, null),
+         price: new FormControl(null, null)
+      });
+      this.loadToolTable();
+   }
 
-  public get formControls(){//controls name from inputs to use in validations in home.component.html
-    return this.toolsForm.controls;
-  }
-  public saveTool():void{
-    this.tool=this.toolsForm.value;
-    this.tool.user=this.auth.getUser;
-    console.log(this.tool);
-    //to do: import tool-list.service and create a tool to save in the database
-  }
+   public get formControls() {//controls name from inputs to use in validations in home.component.html
+      return this.toolsForm.controls;
+   }
+   public saveTool(): void {
+      this.tool = this.toolsForm.value;
+      //get user from authentication, to set in the tool class and save it for the relationship in the DB
+      this.tool.user = this.auth.getUser;
+      this.toolService.saveTool(this.tool).subscribe(()=> this.loadToolTable());//update the table after adding tool
+      console.log(this.tool);
+   }
+   public loadToolTable(): void {
+      this.toolService.getToolList().subscribe({
+         next: (toolList) => {
+            this.exportToolList.data=toolList;
+         },
+         error: (exc) => {
+            console.log(exc);
+         }
+      });
+   }
 }

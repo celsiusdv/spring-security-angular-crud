@@ -21,7 +21,6 @@ export class AuthenticationService {
 		return this.http.post<any>(`${this.apiUrl}/login`, body)
 			.pipe(map(value => {//return the user from the server
 				this.user = value;
-				console.log(this.user);
 				// store token in local storage to keep user logged in between page refreshes
 				if (this.user.token != null) {
 					localStorage.setItem('token', `${this.user.token}`);

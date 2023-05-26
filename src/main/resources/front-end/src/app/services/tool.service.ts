@@ -8,19 +8,22 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class ToolService {
-  private apiUrl: string = "http://localhost:8080/api/tool-management";
+   private apiUrl: string = "http://localhost:8080/api/tool-management";
 
-  constructor(private router:Router, private http:HttpClient) { }
-  
-  /*TO DO: create crud methods
-  POST: /tool {body}
-  GET: /tools ✔️
-  GET: /tool/{id}
-  PUT: /tool/{id} {body}
-  DELETE: /tool/{id}
-  */
-  public getToolList(): Observable<Tool[]> {
-    return this.http.get<Tool[]>(`${this.apiUrl}/tools`);
-  }
+   constructor(private http: HttpClient) { }
+
+
+   public saveTool(tool: Tool): Observable<Object> {
+      return this.http.post(`${this.apiUrl}/tool`, tool);
+   }
+   public getToolList(): Observable<Tool[]> {
+      return this.http.get<Tool[]>(`${this.apiUrl}/tools`);
+   }
+   public updateTool(toolId: number, tool: Tool): Observable<Object> {
+      return this.http.put(`${this.apiUrl}/tool/${toolId}`, tool);
+   }
+   public deleteTool(toolId: number): Observable<Object> {
+      return this.http.delete(`${this.apiUrl}/tool/${toolId}`, { responseType: 'text' });
+   }
 
 }

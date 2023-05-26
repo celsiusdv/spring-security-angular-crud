@@ -1,0 +1,55 @@
+<h1>Tool Management Pane</h1>
+<div class="parent">
+    
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i}} </td>
+      </ng-container>
+    
+          <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef style="background-color: rgb(150, 97, 209);"> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.toolId}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.toolName}} </td>
+      </ng-container>
+    
+      <!-- Weight Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef style="background-color: rgb(14, 136, 91);"> Added By </th>
+        <td mat-cell *matCellDef="let element"> {{element.user.username}}{{element.user.userId}} </td>
+      </ng-container>
+
+        <ng-container matColumnDef="manage">
+            <th mat-header-cell *matHeaderCellDef style="background-color: rgb(150, 97, 209);"> Manage </th>
+            <td mat-cell *matCellDef="let element; let tableIndex = index;">
+
+              <!-- tableIndex value comes from table elements index, check app-routing-module.ts to see parameter name -->
+                 <button mat-raised-button color="accent"
+                  [routerLink]="['/update-delete',tableIndex]"
+                  [queryParams]="{manage:'1'}">update</button>
+
+                  <!-- [queryParams]="{manage:'2'}" value goes to update-delete.component.ts -->
+                 <button mat-raised-button color="warn"
+                  [routerLink]="['/update-delete',tableIndex]" 
+                  [queryParams]="{manage:'2'}">delete</button>
+
+            </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</div>

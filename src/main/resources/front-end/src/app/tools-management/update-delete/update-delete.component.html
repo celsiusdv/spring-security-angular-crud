@@ -1,6 +1,17 @@
-<h4>actions: {{action}}</h4>
-<h5>index value from table= {{tableIndex}}</h5>
+<!-- <h4>actions: {{action}}</h4>
+<h5>index value from table= {{tableIndex}}</h5> -->
 
-<input type="text" [(ngModel)]="tool.toolName"><br>
-<input type="text"[(ngModel)]="tool.price"><br>
-<button (click)="modifyTool()">{{action}}</button>
+<div>
+    <mat-form-field >
+        <mat-label>Tool Name</mat-label>
+        <input matInput [(ngModel)]="tool.toolName">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput  [(ngModel)]="tool.price">
+    </mat-form-field>
+    <button (click)="modifyTool()"style="margin-top: 10px;" mat-raised-button color="{{colorButton}}">
+        {{action}}
+    </button>
+</div>

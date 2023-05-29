@@ -14,7 +14,7 @@ export class UpdateDeleteComponent {
    queryValue:number;
    action!:string;
    tool:Tool=new Tool();
-
+   colorButton!:string;
    constructor(private route: ActivatedRoute,private toolService:ToolService,private goBack: Router) {
       /* value received from tools-management.component.html, update or delete button with [routerLink] */
       this.tableIndex = this.route.snapshot.params['index'];
@@ -22,7 +22,7 @@ export class UpdateDeleteComponent {
       this.queryValue = this.route.snapshot.queryParams['manage'];
 
       this.fillInputs();//fill the inputs through [(ngModel)] in update-delete.component.html
-      this.switchButtonAction();
+      this.switchButton();
    }
 
    public modifyTool(): void {
@@ -59,12 +59,14 @@ export class UpdateDeleteComponent {
       this.toolService.getToolList().subscribe(data => { this.tool = data[this.tableIndex]; } );
    }
 
-   public switchButtonAction():void{
-      if (this.queryValue == 1) {
-         this.action = "update";
-      } else if (this.queryValue == 2) {
-         this.action = "delete";
-      }
-   }
+   protected switchButton(): void {//these values are set in the button to switch color depending of the query value
+    if (this.queryValue == 1) {
+       this.action = "update";//interpolation in button value
+       this.colorButton = "accent"
+    } else if (this.queryValue == 2) {
+       this.action = "delete";
+       this.colorButton = "warn"
+    }
+ }
 
 }

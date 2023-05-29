@@ -2,8 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, find, map } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
-import { User } from '../_models/user';
-import { Role } from '../_models/role';
 
 //blocks the route to the tool management panel for not authenticated users
 export const toolsGuard = (state: RouterStateSnapshot) => {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/_models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -18,8 +18,8 @@ export class LoginComponent {
     private route: ActivatedRoute, private router: Router) {
 
     this.formLogin = new FormGroup({
-      username: new FormControl(null, null),
-      password: new FormControl(null, null)
+        username:new FormControl(null,[Validators.required,Validators.minLength(3)]),
+        password:new FormControl(null,[Validators.required,Validators.minLength(5)])
     });
   }
 

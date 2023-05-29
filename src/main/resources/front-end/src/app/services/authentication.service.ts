@@ -24,27 +24,28 @@ export class AuthenticationService {
 				// store token in local storage to keep user logged in between page refreshes
 				if (this.user.token != null) {
 					localStorage.setItem('token', `${this.user.token}`);
-				//progapate boolean value to all elements in the specified html tags
+					//progapate boolean value to all elements in the specified html tags
 					this.loginSubject.next(true);
 					console.log("inside login method from authentication service: logged user?=")
 					console.log(this.isLoggedIn);
 				}
 			}));
 	}
-	public get getUser():User{ return this.user;}
 	public createUser(user: User): Observable<Object> {
 		return this.http.post(`${this.apiUrl}/register`, user);
 	}
-// methods to allow components to be shown according to the login status
-	public get loginStatus():BehaviorSubject<boolean>{return this.loginSubject;}
-	public get isLoggedIn():boolean{return this.loginSubject.value;}
-	public get getToken():string | null {return localStorage.getItem('token');}
+	public get getUser(): User { return this.user; }
+
+	// methods to allow components to be shown according to the login status
+	public get loginStatus(): BehaviorSubject<boolean> { return this.loginSubject; }
+	public get isLoggedIn(): boolean { return this.loginSubject.value; }
+	public get getToken(): string | null { return localStorage.getItem('token'); }
 
 	//keep the session for each refresh page
-	private keepSession():void{
-		if(this.getToken !== null) this.loginSubject= new BehaviorSubject(true);
-		else this.loginSubject= new BehaviorSubject(false);
-		
+	private keepSession(): void {
+		if (this.getToken !== null) this.loginSubject = new BehaviorSubject(true);
+		else this.loginSubject = new BehaviorSubject(false);
+
 	}
 
 	//remove user and token from local storage to log user out
@@ -55,11 +56,10 @@ export class AuthenticationService {
 		this.router.navigate(['/']);
 	}
 
-	public hasRole(role:string[]):boolean{//method used in required-roles.directive.ts
-		if(this.user != null){
-		  const userRoles = this.user.authorities;//fill all the roles from the user in this variable
-		  return userRoles.some( user => role.includes(user.authority) );//check if the value from parameter are similar to return true
-		}else return false;
-	  }
-
+	public hasRole(role: string[]): boolean {//method used in required-roles.directive.ts
+		if (this.user != null) {
+			const userRoles = this.user.authorities;//fill all the roles from the user in this variable
+			return userRoles.some(user => role.includes(user.authority));//check if the value from parameter are similar to return true
+		} else return false;
+	}
 }

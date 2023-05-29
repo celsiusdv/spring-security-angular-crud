@@ -1,21 +1,43 @@
-<h1>home section</h1>
-<div *ngIf="loginStatus | async as loginStatus"><!-- this element will be shown only for authenticated users -->
+<div *ngIf="loginStatus | async as loginStatus" class="container"><!-- this element will be shown only for authenticated users -->
     <form [formGroup]="toolsForm" (ngSubmit)="saveTool()">
 
-        <label for="toolName">Tool Name</label>
-        <input type="text" formControlName="toolName">
+        <!-- input for user name -->
+        <mat-form-field class="input-style">
+            <mat-label>Enter a Tool name</mat-label>
+            <input matInput type="text" formControlName="toolName">
+            <mat-error *ngIf="formControls['toolName'].touched && formControls['toolName'].invalid">
+                <label *ngIf="formControls['toolName'].errors && formControls['toolName'].errors['required']">
+                    Empty field.
+                </label>
+                <label *ngIf="formControls['toolName'].errors?.['minlength']">
+                    Name must be at least 2 characters long.
+                </label>
+            </mat-error>
+        </mat-form-field>
         
-        <br>
 
-        <label for="price">Price</label>
-        <input type="text" formControlName="price">
+        <!-- input for user name -->
+        <mat-form-field class="input-style">
+            <mat-label>Enter a price</mat-label>
+            <input matInput type="text" formControlName="price">
+            <mat-error *ngIf="formControls['price'].touched && formControls['price'].invalid">
+                <label *ngIf="formControls['price'].errors && formControls['price'].errors['required']">
+                    Empty field.
+                </label>
+                <label *ngIf="formControls['price'].errors?.['minlength']">
+                    Name must be at least 1 characters long.
+                </label>
+            </mat-error>
+        </mat-form-field>
 
-        <button type="submit" >send </button>
+        <button style="margin-top: 10px;" mat-raised-button color="accent">send</button>
     </form>
 </div>
+
 <hr>
-<h1 *requiredRoles="['USER']" style="color: blue;">items only for users</h1>
-<h1 *requiredRoles="['ADMIN']" style="color: brown;">items only for admins</h1>
+
+<h1 *requiredRoles="['USER']" style="color: blue;">Logged as user</h1>
+<h1 *requiredRoles="['ADMIN']" style="color: brown;">Logged as admin</h1>
 <div class="tool-list"><!-- export data from home.component.ts to child component via @Input() in tool-list.component.ts -->
     <app-tool-list [toolList]="exportToolList"> </app-tool-list>
 </div>

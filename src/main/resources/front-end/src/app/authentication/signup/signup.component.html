@@ -1,15 +1,35 @@
-<div style="text-align: center;">
-    <h1>sign up</h1>
+<div class="container">
+    <h1>Sign up</h1>
     <form [formGroup]="signupForm" (ngSubmit)="send()">
 
-        <label for="username">User Name</label>
-        <input type="text" formControlName="username" id="username">
+        <!-- input for user name -->
+        <mat-form-field class="input-style">
+            <mat-label>Enter a User name</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error *ngIf="formControls['username'].touched && formControls['username'].invalid">
+                <label *ngIf="formControls['username'].errors && formControls['username'].errors['required']">
+                    Empty field.
+                </label>
+                <label *ngIf="formControls['username'].errors?.['minlength']">
+                    Name must be at least 3 characters long.
+                </label>
+            </mat-error>
+        </mat-form-field>
         
-        <br>
+        <!-- input for password -->
+        <mat-form-field class="input-style">
+            <mat-label>Enter a password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="formControls['password'].touched && formControls['password'].invalid">
+                <label *ngIf="formControls['password'].errors && formControls['password'].errors['required']">
+                    Empty field.
+                </label>
+                <label *ngIf="formControls['password'].errors?.['minlength']">
+                    Password must be at least 9 characters long.
+                </label>
+            </mat-error>
+        </mat-form-field>
 
-        <label for="password">Password</label>
-        <input type="password" formControlName="password" id="password">
-
-        <button type="submit" >send </button>
+        <button style="margin-top: 10px;" mat-raised-button color="accent">Sign Up</button>
     </form>
 </div>

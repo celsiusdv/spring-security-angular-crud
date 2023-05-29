@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input'; 
 import { MatTableModule } from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card'; 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +26,7 @@ import { ToolsManagementComponent } from './tools-management/tools-management.co
 import { UpdateDeleteComponent } from './tools-management/update-delete/update-delete.component';
 import { RequiredRoleDirective } from './services/required-role.directive';
 import { AdminPaneComponent } from './admin-pane/admin-pane.component';
+import { AdminService } from './services/admin.service';
 
 
 
@@ -35,7 +37,8 @@ const MaterialModule= [
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule,
+  MatCardModule
 ];
 @NgModule({
   declarations: [
@@ -58,7 +61,12 @@ const MaterialModule= [
     ReactiveFormsModule,
     NoopAnimationsModule
   ],
-  providers: [AuthenticationService,ToolService, JwtInterceptorService],//services goes in this array
+  providers: [//services goes in this array
+    AuthenticationService,
+    ToolService,
+    JwtInterceptorService,
+    AdminService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

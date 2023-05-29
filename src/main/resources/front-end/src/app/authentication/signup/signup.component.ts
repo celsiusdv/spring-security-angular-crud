@@ -16,8 +16,8 @@ export class SignupComponent {
   constructor(private auth:AuthenticationService,private goBack: Router) {
 
     this.signupForm = new FormGroup({
-      username: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(3)])
+        username:new FormControl(null,[Validators.required,Validators.minLength(3)]),
+        password:new FormControl(null,[Validators.required,Validators.minLength(5)])
     });
     
   }

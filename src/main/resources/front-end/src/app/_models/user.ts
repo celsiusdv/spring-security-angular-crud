@@ -1,6 +1,9 @@
 import { Role } from "./role";
 
 export class User {
+    hasRole(role: string[]) {
+      throw new Error('Method not implemented.');
+    }
     id!: number;
     username!: string;
     password!:string;

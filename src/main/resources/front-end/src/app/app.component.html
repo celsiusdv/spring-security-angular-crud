@@ -12,6 +12,11 @@
             <mat-icon>handyman</mat-icon>
             tools management
         </button>
+        <button mat-raised-button  style="margin-top: 11px;"
+            *ngIf="(loginStatus | async)==true as loginStatus" routerLink="/admin" routerLinkActive="is-active">
+            <mat-icon>admin_panel_settings</mat-icon>
+            admin control
+        </button>
     </div>
   
     <span class="spacer"></span>

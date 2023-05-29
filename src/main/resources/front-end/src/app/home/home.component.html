@@ -14,8 +14,9 @@
     </form>
 </div>
 <hr>
-
-<div><!-- export data from home.component.ts to child component via @Input() in tool-list.component.ts -->
+<h1 *requiredRoles="['USER']" style="color: blue;">items only for users</h1>
+<h1 *requiredRoles="['ADMIN']" style="color: brown;">items only for admins</h1>
+<div class="tool-list"><!-- export data from home.component.ts to child component via @Input() in tool-list.component.ts -->
     <app-tool-list [toolList]="exportToolList"> </app-tool-list>
 </div>
 

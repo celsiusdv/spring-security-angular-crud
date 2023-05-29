@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -20,6 +21,9 @@ public class AdminService {
     @Autowired
     private UserRepository userRepository;
 
+    public List<UserEntity> getAllUsers(){
+        return userRepository.findAll();
+    }
     public ResponseEntity<String> deleteUser(@PathVariable("id")Integer id){
         Optional<UserEntity> userEntity;
         try{

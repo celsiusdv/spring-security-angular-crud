@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../_models/user';
+import { Role } from '../_models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,6 @@ export class AuthenticationService {
 	private apiUrl: string = "http://localhost:8080/api/auth";
 	private loginSubject!: BehaviorSubject<boolean>;
 	private user!: User;
-
 	constructor(private router: Router, private http: HttpClient) {
 		this.keepSession();
 	}
@@ -54,5 +54,12 @@ export class AuthenticationService {
 		this.loginSubject.next(false);
 		this.router.navigate(['/']);
 	}
+
+	public hasRole(role:string[]):boolean{//method used in required-roles.directive.ts
+		if(this.user != null){
+		  const userRoles = this.user.authorities;//fill all the roles from the user in this variable
+		  return userRoles.some( user => role.includes(user.authority) );//check if the value from parameter are similar to return true
+		}else return false;
+	  }
 
 }

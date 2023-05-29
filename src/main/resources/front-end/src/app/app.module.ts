@@ -23,6 +23,8 @@ import { ToolService } from './services/tool.service';
 import { JwtInterceptorService } from './services/jwt.interceptor';
 import { ToolsManagementComponent } from './tools-management/tools-management.component';
 import { UpdateDeleteComponent } from './tools-management/update-delete/update-delete.component';
+import { RequiredRoleDirective } from './services/required-role.directive';
+import { AdminPaneComponent } from './admin-pane/admin-pane.component';
 
 
 
@@ -43,7 +45,9 @@ const MaterialModule= [
     SignupComponent,
     ToolListComponent,
     ToolsManagementComponent,
-    UpdateDeleteComponent
+    UpdateDeleteComponent,
+    RequiredRoleDirective,
+    AdminPaneComponent
   ],
   imports: [
     BrowserModule,

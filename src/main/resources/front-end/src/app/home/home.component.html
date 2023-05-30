@@ -36,9 +36,22 @@
 
 <hr>
 
-<h1 *requiredRoles="['USER']" style="color: blue;">Logged as user</h1>
-<h1 *requiredRoles="['ADMIN']" style="color: brown;">Logged as admin</h1>
-<div class="tool-list"><!-- export data from home.component.ts to child component via @Input() in tool-list.component.ts -->
+
+<div class="child-container">
+    <div *ngIf="(loginStatus | async)==true as loginStatus; else spectator;" class="card">
+        <label>Logged as
+            <span *requiredRoles="['USER']" class="span-user">user</span>
+            <span *requiredRoles="['ADMIN']" class="span-admin">admin</span>
+        </label>
+    </div>
+
+    <ng-template #spectator>
+        <div class="card">
+            <label>No logged in</label>
+        </div>
+    </ng-template>
+
+    <!-- export data from home.component.ts to child component via @Input() in tool-list.component.ts -->
     <app-tool-list [toolList]="exportToolList"> </app-tool-list>
 </div>
 

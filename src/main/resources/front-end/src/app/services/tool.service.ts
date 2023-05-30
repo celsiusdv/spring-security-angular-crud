@@ -23,7 +23,7 @@ export class ToolService {
       return this.http.put(`${this.apiUrl}/tool/${toolId}`, tool);
    }
    public deleteTool(toolId: number): Observable<Object> {
-      return this.http.delete(`${this.apiUrl}/tool/${toolId}`, { responseType: 'text' });
+      return this.http.delete(`${this.apiUrl}/tool/${toolId}`, { responseType: 'text' } );
    }
 
 }

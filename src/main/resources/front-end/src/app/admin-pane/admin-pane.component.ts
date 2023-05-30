@@ -9,6 +9,7 @@ import { User } from '../_models/user';
 })
 export class AdminPaneComponent {
 	users!:Array<any>;
+
 	constructor(private admin: AdminService) {
 
 		this.admin.getUsers().subscribe(
@@ -18,4 +19,12 @@ export class AdminPaneComponent {
 			}
 		);
 	}
+
+    public delete(id:number):void{
+        this.admin.deleteUser(id).subscribe(()=>{
+            this.admin.getUsers().subscribe(data =>{
+                this.users=data;
+            });
+        });
+    }
 }

@@ -15,4 +15,7 @@ export class AdminService {
   public getUsers():Observable<User[]>{
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
+  public deleteUser(userId:number):Observable<Object>{
+    return this.http.delete(`${this.apiUrl}/user/${userId}`, { responseType: 'text' });
+  }
 }

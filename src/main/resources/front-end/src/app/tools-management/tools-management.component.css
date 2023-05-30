@@ -1,0 +1,8 @@
+.update{
+    margin-left: 10px;
+    background:linear-gradient(135deg, #184e68 0%,#57ca85 100%);
+}
+.delete{
+    background:linear-gradient(135deg, #f65599 0%,#4d0316 100%);
+    margin-left: 10px;
+}

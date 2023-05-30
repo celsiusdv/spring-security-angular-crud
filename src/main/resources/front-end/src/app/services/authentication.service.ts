@@ -24,6 +24,7 @@ export class AuthenticationService {
 				// store token in local storage to keep user logged in between page refreshes
 				if (this.user.token != null) {
 					localStorage.setItem('token', `${this.user.token}`);
+                    localStorage.setItem('user', JSON.stringify(this.user));
 					//progapate boolean value to all elements in the specified html tags
 					this.loginSubject.next(true);
 					console.log("inside login method from authentication service: logged user?=")

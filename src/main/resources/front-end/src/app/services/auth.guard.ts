@@ -23,13 +23,15 @@ export const toolsGuard = (state: RouterStateSnapshot) => {
 //blocks the route to the admin panel for not authenticated users
 export const adminGuard = () => {
     const service = inject(AuthenticationService);
+    const user = JSON.parse(localStorage.getItem('user')!);
     let isAdmin: boolean = false;
-    for (let i = 0; i < service.getUser?.authorities?.length; i++) {
-        if (service.getUser?.authorities[i]?.authority === "ADMIN"){
-            isAdmin=true;
+
+    for (let i = 0; i < user?.authorities?.length; i++) {
+        if (user?.authorities[i]?.authority === "ADMIN") {
+            isAdmin = true;
             break;
         }
-  }
+    }
     return service.loginStatus.pipe(
         map((isLoggedIn) => {
             if (isLoggedIn == true && isAdmin == true) {

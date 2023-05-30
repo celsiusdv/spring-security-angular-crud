@@ -4,5 +4,6 @@
     border-spacing: 0;
     border-collapse: separate;
     border: var(--border);
-    overflow: hidden
+    overflow: hidden;
+    width: 500px;
 }

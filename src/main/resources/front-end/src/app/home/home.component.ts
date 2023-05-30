@@ -32,7 +32,7 @@ export class HomeComponent {
     public saveTool(): void {
         this.tool = this.toolsForm.value;
         //get user from authentication, to set in the tool class and save it for the relationship in the DB
-        this.tool.user = this.auth.getUser;
+        this.tool.user = JSON.parse(localStorage.getItem('user')!);
         this.toolService.saveTool(this.tool).subscribe(() => this.loadToolTable());//update the table after adding tool
         console.log(this.tool);
     }

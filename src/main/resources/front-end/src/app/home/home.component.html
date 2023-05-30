@@ -39,7 +39,7 @@
 
 <div class="child-container">
     <div *ngIf="(loginStatus | async)==true as loginStatus; else spectator;" class="card">
-        <label>Logged as
+        <label class="label-auth">Logged as
             <span *requiredRoles="['USER']" class="span-user">user</span>
             <span *requiredRoles="['ADMIN']" class="span-admin">admin</span>
         </label>
@@ -47,7 +47,7 @@
 
     <ng-template #spectator>
         <div class="card">
-            <label>No logged in</label>
+            <label class="label-auth">No logged in</label>
         </div>
     </ng-template>
 

@@ -54,7 +54,7 @@ form{
         cursor: pointer;
         transition: 0.4s;
 }
-label{
+.label-auth{
     font-weight: 700;
     font-size: xx-large;
     color:rgb(184, 178, 170);
